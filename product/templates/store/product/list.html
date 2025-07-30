@@ -1,0 +1,20 @@
+{% extends "store/base.html" %}
+{% load static %}
+
+{% block title %}
+    Products
+{% endblock %}
+
+{% block content %}
+    <div id="main" class="product-list">
+    <h1>Products</h1>
+    {% for item in items %}
+    <div class="item">
+        <a href="{{ item.get_absolute_url }}"></a>
+        <a href="{{ item.get_absolute_url }}">{{ item.name }}</a>
+        <br>
+        ${{ item.price }}
+    </div>
+    {% endfor %}
+    </div>
+{% endblock %}
