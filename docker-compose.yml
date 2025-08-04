@@ -1,0 +1,38 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    depends_on:
+      - stripe
+
+  stripe:
+    image: stripe/stripe-cli
+    command: ["listen", "--forward-to", "http://web:8000/payment/webhook/"]
+    env_file:
+      - .env
+    ports:
+      - "12111:12111"
+    volumes:
+      - ./.stripe:/root/.stripe
+
+  db:
+    image: postgres:15
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+
+volumes:
+    postgres_data:
