@@ -14,8 +14,12 @@ django==5.2.4
     # via store-test (pyproject.toml)
 dotenv==0.9.9
     # via store-test (pyproject.toml)
+gunicorn==23.0.0
+    # via store-test (pyproject.toml)
 idna==3.10
     # via requests
+packaging==25.0
+    # via gunicorn
 psycopg2-binary==2.9.10
     # via store-test (pyproject.toml)
 python-dotenv==1.1.1

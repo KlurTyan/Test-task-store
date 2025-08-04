@@ -6,10 +6,12 @@ COPY requirements.txt /app/
 RUN python -m venv /app/venv
 
 RUN pip install --upgrade pip \
-    && pip install -r /app/requirements.txt
+    && pip install --no-cache-dir -r /app/requirements.txt
 
 
 COPY . /app/
+
+RUN python manage.py collectstatic --noinput
 
 ENV PATH="/app/venv/bin:$PATH" \
     PYTHONDONTWRITEBYTECODE=1 \
@@ -18,4 +20,5 @@ ENV PATH="/app/venv/bin:$PATH" \
 
 EXPOSE 8000
 
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "store.wsgi:application"]
+
