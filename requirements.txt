@@ -34,3 +34,5 @@ typing-extensions==4.14.1
     # via stripe
 urllib3==2.5.0
     # via requests
+whitenoise==6.9.0
+    # via store-test (pyproject.toml)
